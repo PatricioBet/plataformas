@@ -49,8 +49,7 @@ const Listar = ({ elementos }) => {
         {
             name: 'Acciones',
             cell: (row, index) => (
-                //<button onClick={() => handleEditar(row, index)}>Editar</button>
-                <button type="button" onClick={() => handleEditar(row, index)} class="btn btn-warning">Editar</button>
+                <button type="button" onClick={() => handleEditar(row)} class="btn btn-warning">Editar</button>
             ),
             ignoreRowClick: true,
             allowOverflow: true,
@@ -62,9 +61,9 @@ const Listar = ({ elementos }) => {
     const handleEditar = async (elemento) => {
         ActividadId(elemento.id).then((info) => {
             setActividadEditando(info);
-            setTituloEditando(info.title || ''); // Asegurarse de que el valor sea una cadena
-            setFechaEditando(info.dueDate ? new Date(elemento.dueDate).toISOString().slice(0, 16) : ''); // Asegurarse de que el valor sea una cadena
-            setCompletedEditando(info.completed || false); // Asegurarse de que el valor sea un booleano
+            setTituloEditando(info.title || ''); 
+            setFechaEditando(info.dueDate ? new Date(elemento.dueDate).toISOString().slice(0, 16) : ''); 
+            setCompletedEditando(info.completed || false); 
             setFilaSeleccionada(elemento.id);
         })
 
@@ -84,6 +83,7 @@ const Listar = ({ elementos }) => {
         setTituloEditando('');
         setFechaEditando('');
         setCompletedEditando(false);
+        mensajes();
         navegation('/listar')
     };
 

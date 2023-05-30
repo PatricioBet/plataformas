@@ -4,14 +4,8 @@ export const Actividades = async () => {
     const datos = await (await fetch(URL + "/api/v1/Activities", {
         method: "GET"
     })).json();
+    console.log(datos);
     return datos;
-}
-
-export const ConseguirId = async () => {
-    const datos = await (await fetch(URL + "/api/v1/Activities", {
-        method: "GET"
-    })).json();
-    return datos.length + 1;
 }
 
 export const ActividadId = async (id) => {
@@ -51,4 +45,13 @@ export const ActualizarActividad = async (data) => {
     })).json();
     console.log(datos);
     return datos;
+}
+
+
+
+export const ConseguirId = async () => {
+    const datos = await (await fetch(URL + "/api/v1/Activities", {
+        method: "GET"
+    })).json();
+    return datos.length + 1;
 }
