@@ -59,12 +59,15 @@ const Listar = ({ elementos }) => {
     ];
 
 
-    const handleEditar = (elemento, fila) => {
-        setActividadEditando(elemento);
-        setTituloEditando(elemento.title || ''); // Asegurarse de que el valor sea una cadena
-        setFechaEditando(elemento.dueDate ? new Date(elemento.dueDate).toISOString().slice(0, 16) : ''); // Asegurarse de que el valor sea una cadena
-        setCompletedEditando(elemento.completed || false); // Asegurarse de que el valor sea un booleano
-        setFilaSeleccionada(fila);
+    const handleEditar = async (elemento) => {
+        ActividadId(elemento.id).then((info) => {
+            setActividadEditando(info);
+            setTituloEditando(info.title || ''); // Asegurarse de que el valor sea una cadena
+            setFechaEditando(info.dueDate ? new Date(elemento.dueDate).toISOString().slice(0, 16) : ''); // Asegurarse de que el valor sea una cadena
+            setCompletedEditando(info.completed || false); // Asegurarse de que el valor sea un booleano
+            setFilaSeleccionada(elemento.id);
+        })
+
     };
 
     const handleGuardar = () => {
@@ -73,7 +76,7 @@ const Listar = ({ elementos }) => {
             "title": tituloEditando,
             "dueDate": fechaEditando,
             "completed": completedEditando
-          };
+        };
 
         ActualizarActividad(datos);
 
@@ -113,53 +116,53 @@ const Listar = ({ elementos }) => {
                 <div className='container-fluid'>
                     <div className="col-lg-10">
                         <div className="p-6">
-                    <h1 className="h4 text-gray-900 mb-5">Editar Actividad</h1>
-                    <label>
-                        Titulo:
-                        <input className="form-control form-control-user" placeholder="Ingrese el título"
-                            type="text"
-                            value={tituloEditando}
-                            onChange={(e) => setTituloEditando(e.target.value)}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Fecha de vencimiento:
-                        <input
-                            className="form-control form-control-user" placeholder="Ingrese la fecha de vencimiento"
-                            type="datetime-local"
-                            value={fechaEditando}
-                            onChange={(e) => setFechaEditando(e.target.value)}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Completado:
-                        <div className="form-check form-switch">
-                            <input
-                                className="form-check-input"
-                                type="checkbox"
-                                checked={completedEditando}
-                                onChange={(e) => setCompletedEditando(e.target.checked)}
-                            />
+                            <h1 className="h4 text-gray-900 mb-5">Editar Actividad</h1>
+                            <label>
+                                Titulo:
+                                <input className="form-control form-control-user" placeholder="Ingrese el título"
+                                    type="text"
+                                    value={tituloEditando}
+                                    onChange={(e) => setTituloEditando(e.target.value)}
+                                />
+                            </label>
+                            <br />
+                            <label>
+                                Fecha de vencimiento:
+                                <input
+                                    className="form-control form-control-user" placeholder="Ingrese la fecha de vencimiento"
+                                    type="datetime-local"
+                                    value={fechaEditando}
+                                    onChange={(e) => setFechaEditando(e.target.value)}
+                                />
+                            </label>
+                            <br />
+                            <label>
+                                Completado:
+                                <div className="form-check form-switch">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        checked={completedEditando}
+                                        onChange={(e) => setCompletedEditando(e.target.checked)}
+                                    />
+                                </div>
+                            </label>
+                            <br />
+                            {/* Agregar botón de "Guardar" */}
+                            <button className="btn btn-facebook btn-user btn-block" onClick={handleGuardar}>Guardar</button>
+                            <button className="btn btn-google btn-user btn-block" onClick={handleSalir}>Salir</button>
                         </div>
-                    </label>
-                    <br />
-                    {/* Agregar botón de "Guardar" */}
-                    <button className="btn btn-facebook btn-user btn-block" onClick={handleGuardar}>Guardar</button>
-                    <button className="btn btn-google btn-user btn-block" onClick={handleSalir}>Salir</button>
-                </div>
-                </div>
+                    </div>
                 </div>
             ) : (
                 <div className="text-center">
-                <h1 className="h3 text-gray-800 mb-5">Actividades registradas</h1>
-                <DataTable
-                    columns={columns}
-                    data={data}
-                    pagination
-                />
-                <a href={"/"} type="button" class="btn btn-secondary">Regresar</a>
+                    <h1 className="h3 text-gray-800 mb-5">Actividades registradas</h1>
+                    <DataTable
+                        columns={columns}
+                        data={data}
+                        pagination
+                    />
+                    <a href={"/"} type="button" class="btn btn-secondary">Regresar</a>
                 </div>
             )}
         </div>
